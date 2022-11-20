@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HotwireForum</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body>
+    <% if user_signed_in? %>
+      <%= turbo_stream_from dom_id(current_user, :broadcast_to) %>
+    <% end %>
+    <%= render 'shared/nav' %>
+    <div class="container mt-4">
+      <%= render 'shared/flash' %>
+      <%= yield %>
+    </div>
+  </body>
+</html>

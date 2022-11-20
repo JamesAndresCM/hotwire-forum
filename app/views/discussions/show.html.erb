@@ -1,0 +1,22 @@
+<%= turbo_stream_from @discussion %>
+<%= render partial: 'discussions/header', locals: { discussion: @discussion } %>
+
+<div class="mt-4">
+  <%= render partial: 'discussions/posts/post', collection: @posts %>
+  <% if @pagy.page == @pagy.last %> 
+    <div id="posts"></div>
+  <% end %>
+</div>
+
+<hr class="my-4">
+
+<%== pagy_bootstrap_nav(@pagy) %>
+
+<%= turbo_frame_tag 'discussion_notification_status' do %>
+  <%= render('discussions/notifications/status', discussion: @discussion, user: Current.user) %>
+<% end %>
+
+<hr class="my-4">
+<div id="<%= dom_id(@new_post) %>">
+  <%= render('discussions/posts/form', post: @new_post, redirect: @pagy.page != @pagy.last) %>
+</div>

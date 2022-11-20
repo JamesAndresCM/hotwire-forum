@@ -1,0 +1,8 @@
+<%= tag.div id: :notifications_count do %>
+  Notifications
+  <% if count > 0 %>
+    <span class="h-6 w-6 flex items-center justify-center bg-red-500 rounded-md text-sm">
+      <%= count > 9 ? "+9" : count  %>
+    </span>
+  <% end %>
+<% end %>

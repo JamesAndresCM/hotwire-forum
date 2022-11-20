@@ -1,0 +1,44 @@
+<%= form_with(model: discussion) do |form| %>
+  <% if discussion.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(discussion.errors.count, "error") %> prevented this discussion from being saved:</h2>
+      <ul>
+        <% discussion.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, placeholder: "How do I...?", class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :category_id, 'Choose Category', class: 'form-label' %>
+    <%= form.collection_select :category_id, Category.sorted, :id, :name, { include_blank: 'Select category' }, { autofocus: false, class: 'form-control'} %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :pinned, class: "form-label" %>
+    <%= form.check_box :pinned %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :closed, class: "form-label" %>
+    <%= form.check_box :closed %>
+  </div>
+
+  <% if discussion.new_record? %>
+    <%= form.fields_for :posts do |post_field| %>
+      <div class="mb-3">
+        <%= post_field.rich_text_area :body, placeholder: 'kickoff the discussion' %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
